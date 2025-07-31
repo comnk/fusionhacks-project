@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Heart, Lightbulb, TrendingUp, Smile } from 'lucide-react';
 
 interface EmotionResult {
@@ -16,110 +17,16 @@ const EmotionDetector: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
-  // Mock emotion analysis (in real app, this would call Hugging Face Emotion API)
-  const analyzeEmotion = async (text: string): Promise<EmotionResult> => {
-    const lowerText = text.toLowerCase();
-    
-    if (lowerText.includes('stress') || lowerText.includes('overwhelmed') || lowerText.includes('pressure')) {
-      return {
-        primaryEmotion: 'Stress',
-        confidence: 85,
-        insights: 'I can sense you\'re feeling stressed right now. That\'s completely normal - we all go through tough times. The good news is there are gentle ways to help yourself feel better.',
-        copingTips: [
-          'Take 3 slow, deep breaths - in through your nose, out through your mouth',
-          'Step away for just 5 minutes and do something you enjoy',
-          'Try gently rolling your shoulders and stretching your neck',
-          'Go for a short walk, even if it\'s just around the room',
-          'Write down what\'s bothering you - sometimes getting it out helps'
-        ],
-        color: 'orange',
-        icon: '😰'
-      };
+  const analyzeEmotion = async (emotions: string): Promise<EmotionResult> => {
+    try {
+      const response = await axios.post<EmotionResult>('http://localhost:8000/analyze-emotions', {
+        emotions
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error("Emotion API error:", error?.response?.data || error.message);
+      throw new Error("Unable to analyze emotion.");
     }
-
-    if (lowerText.includes('sad') || lowerText.includes('down') || lowerText.includes('depressed')) {
-      return {
-        primaryEmotion: 'Sadness',
-        confidence: 78,
-        insights: 'I hear that you\'re feeling sad, and I want you to know that\'s okay. Your feelings matter, and it\'s brave of you to acknowledge them. This difficult moment won\'t last forever.',
-        copingTips: [
-          'Call or text someone who cares about you - you don\'t have to face this alone',
-          'Do one small thing that usually makes you smile, even for a moment',
-          'Think of 3 things you\'re grateful for today, no matter how small',
-          'Open a window or step outside - fresh air can be surprisingly healing',
-          'Write about your feelings without judging yourself'
-        ],
-        color: 'blue',
-        icon: '😢'
-      };
-    }
-
-    if (lowerText.includes('anxious') || lowerText.includes('worried') || lowerText.includes('nervous')) {
-      return {
-        primaryEmotion: 'Anxiety',
-        confidence: 82,
-        insights: 'I can feel the worry in your words. Anxiety is your mind trying to keep you safe, but sometimes it gets a bit too protective. Let\'s find some gentle ways to calm those racing thoughts.',
-        copingTips: [
-          'Look around and name 5 things you can see, 4 you can hear, 3 you can touch',
-          'Breathe in for 4 counts, hold for 7, breathe out for 8 - repeat 3 times',
-          'Ask yourself: "Is this worry based on facts or fears?"',
-          'Focus on just one thing you can control right now',
-          'Try a 5-minute guided meditation or gentle stretching'
-        ],
-        color: 'purple',
-        icon: '😟'
-      };
-    }
-
-    if (lowerText.includes('happy') || lowerText.includes('excited') || lowerText.includes('joy')) {
-      return {
-        primaryEmotion: 'Joy',
-        confidence: 90,
-        insights: 'Your happiness is shining through your words! I love seeing this. These beautiful moments are precious - let\'s help you soak up all the good feelings.',
-        copingTips: [
-          'Take a moment to really feel this happiness - breathe it in deeply',
-          'Share your joy with someone special - happiness grows when shared',
-          'Remember what created this feeling so you can return to it later',
-          'Do more of what makes your heart light up like this',
-          'Think about how you can sprinkle more of these moments into your days'
-        ],
-        color: 'green',
-        icon: '😊'
-      };
-    }
-
-    if (lowerText.includes('angry') || lowerText.includes('frustrated') || lowerText.includes('mad')) {
-      return {
-        primaryEmotion: 'Anger',
-        confidence: 88,
-        insights: 'I can feel the fire in your words. Anger usually means something important to you has been hurt or threatened. Your feelings are valid - let\'s find healthy ways to honor them.',
-        copingTips: [
-          'Before you react, take 10 slow breaths - give your heart time to slow down',
-          'Move your body - do jumping jacks, punch a pillow, or go for a brisk walk',
-          'Write out everything you\'re feeling - don\'t hold back, let it all out',
-          'When you feel the heat rising, pause and count to 10 slowly',
-          'Ask yourself: "What do I really need right now that I\'m not getting?"'
-        ],
-        color: 'red',
-        icon: '😠'
-      };
-    }
-
-    // Default response for mixed or unclear emotions
-    return {
-      primaryEmotion: 'Mixed Emotions',
-      confidence: 65,
-      insights: 'I can sense you\'re feeling a lot of different things right now. That\'s so human and completely normal - our hearts are big enough to hold many feelings at once.',
-      copingTips: [
-        'Give yourself permission to feel confused - it\'s okay not to have it all figured out',
-        'Try to stay in this moment instead of worrying about tomorrow',
-        'Be as kind to yourself as you would be to your best friend',
-        'Talk to someone who listens without trying to fix everything',
-        'Remember: feelings are like weather - they change and pass through'
-      ],
-      color: 'gray',
-      icon: '🤔'
-    };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +35,6 @@ const EmotionDetector: React.FC = () => {
 
     setLoading(true);
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
       const analysis = await analyzeEmotion(emotionText);
       setResult(analysis);

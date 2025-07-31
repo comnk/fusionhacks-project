@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Search, AlertTriangle, Home, User } from 'lucide-react';
 
 interface SymptomResult {
@@ -13,66 +14,13 @@ const SymptomChecker: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
-  // Mock symptom analysis (in real app, this would call actual medical APIs)
   const analyzeSymptoms = async (symptoms: string): Promise<SymptomResult> => {
-    const lowerSymptoms = symptoms.toLowerCase();
-    
-    if (lowerSymptoms.includes('headache') && lowerSymptoms.includes('fever')) {
-      return {
-        conditions: ['Common Cold', 'Flu', 'Viral Infection', 'Tension Headache'],
-        homeCare: [
-          'Get cozy and rest as much as your body needs - sleep is healing',
-          'Sip warm tea, water, or soup throughout the day to stay hydrated',
-          'Take gentle pain relief like acetaminophen if needed (follow the bottle)',
-          'Try a cool, damp cloth on your forehead - it can be surprisingly soothing',
-          'Keep an eye on your temperature, but don\'t obsess over it'
-        ],
-        seekHelp: 'Please reach out to a doctor if your fever goes above 102°F (39°C), you\'re not feeling better after a week, or if you have a really bad headache, stiff neck, or trouble breathing. Trust your instincts - if something feels seriously wrong, get help.'
-      };
-    }
-
-    if (lowerSymptoms.includes('cough') || lowerSymptoms.includes('sore throat')) {
-      return {
-        conditions: ['Common Cold', 'Upper Respiratory Infection', 'Allergies', 'Bronchitis'],
-        homeCare: [
-          'Warm drinks like tea with honey can be incredibly soothing',
-          'Try breathing in steam from a hot shower or bowl of hot water',
-          'A spoonful of honey in warm water works wonders for scratchy throats',
-          'Stay away from smoke and strong smells that might irritate you more',
-          'Listen to your body and rest when you need to'
-        ],
-        seekHelp: 'Time to see a doctor if your cough hangs around for more than 3 weeks, you cough up blood, breathing becomes difficult, or you develop a high fever. Don\'t wait if you\'re worried.'
-      };
-    }
-
-    if (lowerSymptoms.includes('stomach') || lowerSymptoms.includes('nausea')) {
-      return {
-        conditions: ['Gastroenteritis', 'Food Poisoning', 'Indigestion', 'Stress-related Upset'],
-        homeCare: [
-          'Sip small amounts of water or clear fluids - your body needs gentle hydration',
-          'When you feel ready, try bland foods like bananas, rice, applesauce, or toast',
-          'Skip dairy, coffee, and greasy foods for now - they might make you feel worse',
-          'Rest and give your stomach a break from solid food until you feel better',
-          'Ginger tea or ginger ale (flat) can help calm an upset stomach'
-        ],
-        seekHelp: 'Please get medical help if you become very dehydrated, see blood in your vomit or stool, have severe belly pain, or if you\'re not feeling better after 3 days. Your body is telling you something important.'
-      };
-    }
-
-    // Generic response for other symptoms
-    return {
-      conditions: ['Various Possible Conditions', 'Consult Healthcare Provider'],
-      homeCare: [
-        'Pay attention to how you\'re feeling and notice any changes',
-        'Rest is one of the best medicines - don\'t feel guilty about taking it easy',
-        'Keep drinking water throughout the day',
-        'Eat nourishing foods when you feel up to it',
-        'Try some gentle relaxation - stress can make everything feel worse'
-      ],
-      seekHelp: 'It\'s always okay to check in with a healthcare professional, especially if your symptoms stick around or get worse. They\'re there to help, and you know your body best.'
-    };
+    const response = await axios.post<SymptomResult>('http://localhost:8000/analyze-symptoms', {
+      symptoms: symptoms
+    });
+    return response.data;
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!symptoms.trim()) return;
