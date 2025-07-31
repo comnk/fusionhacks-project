@@ -22,8 +22,6 @@ const EmotionDetector: React.FC = () => {
 
   const { t, i18n } = useTranslation('emotion');
 
-  console.log("Current language:", i18n.language);
-
   const analyzeEmotion = async (emotions: string): Promise<EmotionResult> => {
     try {
       const response = await axios.post<EmotionResult>('http://localhost:8000/analyze-emotions', {
