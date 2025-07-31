@@ -1,0 +1,14 @@
+{
+    "headerTitle": "¿Cómo te sientes?",
+    "headerSubtitle": "Estoy aquí para escucharte y ayudarte a comprender tus emociones",
+    "textareaLabel": "Cuéntame qué tienes en el corazón hoy...",
+    "textareaPlaceholder": "Me siento abrumado con todo lo que está pasando... o quizás estoy emocionado por algo nuevo... simplemente comparte lo que sientas en tu corazón ahora mismo.",
+    "submitButton": "Ayúdame a entender",
+    "loadingMessage": "Entendiendo tus sentimientos...",
+    "confidence": "Estoy {{confidence}}% seguro",
+    "copingTipsTitle": "Algunas formas suaves de ayudarte",
+    "reminderTitle": "Un recordatorio suave",
+    "reminderText": "Revisarte a ti mismo regularmente es como darle un cálido abrazo a tu corazón. Te ayuda a comprenderte mejor.",
+    "reminderSuggestion": "Quizás intenta escribir cómo te sientes cada día",
+    "supportMessage": "💙 Tú importas, y tus sentimientos importan. Si estas emociones difíciles persisten, considera hablar con alguien que pueda ayudarte, como un consejero o terapeuta. Mereces apoyo."
+}

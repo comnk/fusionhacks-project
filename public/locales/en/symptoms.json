@@ -1,0 +1,18 @@
+{
+    "header": {
+        "title": "How can I help you feel better?",
+        "subtitle": "Tell me what's bothering you, and I'll help you understand what might be going on"
+    },
+    "form": {
+        "label": "What's not feeling right today?",
+        "placeholder": "I have a headache and feel tired... or my throat is scratchy and I'm coughing...",
+        "button": "Help me understand",
+        "loading": "Looking into this for you..."
+    },
+    "results": {
+        "conditionsTitle": "This might be what's going on",
+        "homeCareTitle": "Ways to take care of yourself at home",
+        "seekHelpTitle": "When it's time to see a doctor",
+        "disclaimer": "💙 I'm here to help you understand what might be going on, but I'm not a replacement for real medical care. When in doubt, trust your instincts and talk to a healthcare professional who can properly examine you."
+    }
+}

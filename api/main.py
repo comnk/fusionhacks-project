@@ -24,9 +24,11 @@ app.add_middleware(
 
 class SymptomRequest(BaseModel):
     symptoms: str
+    language: str
 
 class EmotionRequest(BaseModel):
     emotions: str
+    language: str
 
 @app.post("/analyze-symptoms")
 async def analyze_symptoms(request: SymptomRequest):
@@ -34,11 +36,22 @@ async def analyze_symptoms(request: SymptomRequest):
         model="gpt-4o-mini",
         
         messages=[
-            {"role": "system", "content": """You are a helpful medical assistant. Return output as a valid JSON object with:
-- "conditions": list of possible conditions
-- "homeCare": list of home care tips
-- "seekHelp": when to get medical help
-Only return the JSON object, no extra text."""},
+            {
+                "role": "system",
+                "content": """
+                You are a helpful medical assistant. Based on the user's language preference (English or Spanish), respond in that language.
+
+                Return output as a valid JSON object with these keys:
+                - "conditions": list of possible conditions
+                - "homeCare": list of home care tips
+                - "seekHelp": guidance on when to get medical help
+
+                Only return the JSON object, with no extra text.
+
+                If the user’s input language is Spanish, reply entirely in Spanish using the same JSON structure.
+                If the user’s input language is English, reply in English.
+                """
+            },
             {"role": "user", "content": f"Given these symptoms, return the JSON: {request.symptoms}"}
         ]
     )
@@ -61,7 +74,7 @@ async def analyze_emotions(request: EmotionRequest):
         model="gpt-4o-mini",
         
         messages=[
-            {"role": "system", "content": """You are a helpful therapist. Return output as a valid JSON object with:
+            {"role": "system", "content": """You are a helpful therapist. Based on the user's language preference (English or Spanish), respond in that language. Return output as a valid JSON object with:
 - "primaryEmotion": primary emotion user most likely is feeling
 - "confidence": how confident are you in your assessment of what the user is feeling (as a whole number from 0 to 100)
 - "insights": give insights on how user is feeling and support them if needed

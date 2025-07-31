@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { Search, AlertTriangle, Home, User } from 'lucide-react';
+
+import '../i18n';
+import LanguageSwitcher from './LanguageSwitcher/LanguageSwitcher';
 
 interface SymptomResult {
   conditions: string[];
@@ -14,9 +18,12 @@ const SymptomChecker: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
+  const { t, i18n } = useTranslation('symptoms');
+
   const analyzeSymptoms = async (symptoms: string): Promise<SymptomResult> => {
     const response = await axios.post<SymptomResult>('http://localhost:8000/analyze-symptoms', {
-      symptoms: symptoms
+      symptoms: symptoms,
+      language: i18n.language
     });
     return response.data;
   };
@@ -27,7 +34,6 @@ const SymptomChecker: React.FC = () => {
 
     setLoading(true);
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
       const analysis = await analyzeSymptoms(symptoms);
       setResult(analysis);
@@ -45,22 +51,23 @@ const SymptomChecker: React.FC = () => {
       <div className="bg-gradient-to-r from-emerald-400 to-teal-400 p-8 text-white">
         <div className="flex items-center mb-2">
           <Search className="w-8 h-8 mr-3" />
-          <h2 className="text-3xl font-bold">How can I help you feel better?</h2>
+          <h2 className="text-3xl font-bold">{t('header.title')}</h2>
         </div>
-        <p className="text-emerald-100 text-lg">Tell me what's bothering you, and I'll help you understand what might be going on</p>
+        <p className="text-emerald-100 text-lg">{t('header.subtitle')}</p>
+        <LanguageSwitcher />
       </div>
 
       <div className="p-8">
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label htmlFor="symptoms" className="block text-gray-800 font-medium mb-4 text-lg">
-              What's not feeling right today?
+              {t('form.label')}
             </label>
             <textarea
               id="symptoms"
               value={symptoms}
               onChange={(e) => setSymptoms(e.target.value)}
-              placeholder="I have a headache and feel tired... or my throat is scratchy and I'm coughing... just describe what you're experiencing in your own words."
+              placeholder={t('form.placeholder')}
               className="w-full p-6 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-400 focus:border-transparent resize-none text-lg leading-relaxed"
               rows={5}
               required
@@ -75,12 +82,12 @@ const SymptomChecker: React.FC = () => {
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                Looking into this for you...
+                {t('form.loading')}
               </>
             ) : (
               <>
                 <Search className="w-6 h-6 mr-3" />
-                Help me understand
+                {t('form.button')}
               </>
             )}
           </button>
@@ -92,7 +99,7 @@ const SymptomChecker: React.FC = () => {
             <div className="bg-blue-50 rounded-2xl p-6">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center text-xl">
                 <AlertTriangle className="w-6 h-6 mr-3 text-blue-600" />
-                This might be what's going on
+                {t('results.conditionsTitle')}
               </h3>
               <div className="space-y-3">
                 {result.conditions.map((condition, index) => (
@@ -108,7 +115,7 @@ const SymptomChecker: React.FC = () => {
             <div className="bg-green-50 rounded-2xl p-6">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center text-xl">
                 <Home className="w-6 h-6 mr-3 text-green-600" />
-                Ways to take care of yourself at home
+                {t('results.homeCareTitle')}
               </h3>
               <div className="space-y-3">
                 {result.homeCare.map((tip, index) => (
@@ -126,14 +133,14 @@ const SymptomChecker: React.FC = () => {
             <div className="bg-yellow-50 rounded-2xl p-6">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center text-xl">
                 <User className="w-6 h-6 mr-3 text-yellow-600" />
-                When it's time to see a doctor
+                {t('results.seekHelpTitle')}
               </h3>
               <p className="text-gray-700 leading-relaxed text-lg">{result.seekHelp}</p>
             </div>
 
             <div className="bg-gray-50 rounded-2xl p-6">
               <p className="text-base text-gray-600 text-center leading-relaxed">
-                💙 I'm here to help you understand what might be going on, but I'm not a replacement for real medical care. When in doubt, trust your instincts and talk to a healthcare professional who can properly examine you.
+                {t('results.disclaimer')}
               </p>
             </div>
           </div>

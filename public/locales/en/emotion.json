@@ -1,0 +1,14 @@
+{
+    "headerTitle": "How are you feeling?",
+    "headerSubtitle": "I'm here to listen and help you understand your emotions",
+    "textareaLabel": "Tell me what's on your heart today...",
+    "textareaPlaceholder": "I feel overwhelmed with everything going on... or maybe I'm excited about something new...",
+    "submitButton": "Help me understand",
+    "loadingMessage": "Understanding your feelings...",
+    "confidence": "I'm {{percent}}% sure",
+    "copingTipsTitle": "Some gentle ways to help yourself",
+    "reminderTitle": "A gentle reminder",
+    "reminderText": "Checking in with yourself regularly is like giving your heart a warm hug. It helps you understand yourself better.",
+    "reminderSuggestion": "Maybe try writing down how you feel each day",
+    "supportMessage": "💙 You matter, and your feelings matter. If these difficult emotions stick around, please consider talking to someone who can help - like a counselor or therapist. You deserve support."
+}

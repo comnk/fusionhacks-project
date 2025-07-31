@@ -1,0 +1,18 @@
+{
+    "header": {
+        "title": "¿Cómo puedo ayudarte a sentirte mejor?",
+        "subtitle": "Cuéntame qué te molesta y te ayudaré a entender qué podría estar pasando"
+    },
+    "form": {
+        "label": "¿Qué no se siente bien hoy?",
+        "placeholder": "Tengo dolor de cabeza y me siento cansado... o me duele la garganta y estoy tosiendo...",
+        "button": "Ayúdame a entender",
+        "loading": "Estoy revisando esto para ti..."
+    },
+    "results": {
+        "conditionsTitle": "Esto podría estar sucediendo",
+        "homeCareTitle": "Maneras de cuidarte en casa",
+        "seekHelpTitle": "Cuándo es momento de ver a un médico",
+        "disclaimer": "💙 Estoy aquí para ayudarte a entender lo que podría estar sucediendo, pero no reemplazo la atención médica real. Cuando tengas dudas, confía en tus instintos y habla con un profesional de la salud que pueda examinarte adecuadamente."
+    }
+}
