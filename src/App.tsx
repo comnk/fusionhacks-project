@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Heart, Brain, Shield, ArrowLeft } from 'lucide-react';
 import SymptomChecker from './components/SymptomChecker';
 import EmotionDetector from './components/EmotionDetector';
+import LanguageSwitcher from './components/LanguageSwitcher/LanguageSwitcher';
 
 function App() {
   const [activeView, setActiveView] = useState<'home' | 'symptoms' | 'emotions'>('home');
@@ -18,6 +19,7 @@ function App() {
           <p className="text-gray-600 text-lg leading-relaxed">
             Your smart health companion for physical and emotional wellness
           </p>
+          <LanguageSwitcher />
         </div>
 
         {/* Feature Cards */}
