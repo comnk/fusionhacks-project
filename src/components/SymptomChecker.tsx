@@ -11,12 +11,12 @@ interface SymptomResult {
 
 const SymptomChecker: React.FC = () => {
   const [symptoms, setSymptoms] = useState('');
-  const [result, setResult] = useState<SymptomResult | null>(null);
+  const [originalResult, setOriginalResult] = useState<SymptomResult | null>(null);
+  const [translatedResult, setTranslatedResult] = useState<SymptomResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [language, setLanguage] = useState('en');
 
-  // Translatable UI strings
   const [translatedUI, setTranslatedUI] = useState({
     title: 'Symptom Checker',
     subtitle: "Enter your symptoms and we'll help you understand what might be going on.",
@@ -28,35 +28,54 @@ const SymptomChecker: React.FC = () => {
     seekHelpTitle: 'When to Seek Help',
   });
 
-  // Translate static UI strings when language changes
+  // 🔁 Translate UI and result when language changes
   useEffect(() => {
-    const translateUI = async () => {
-      const keys = Object.keys(translatedUI) as (keyof typeof translatedUI)[];
-      const values = Object.values(translatedUI);
-      const translatedValues = await Promise.all(values.map((text) => translateText(text, language)));
-      const newTranslatedUI = keys.reduce((acc, key, idx) => {
-        acc[key] = translatedValues[idx];
-        return acc;
-      }, {} as typeof translatedUI);
-      setTranslatedUI(newTranslatedUI);
+    const translateAll = async () => {
+      // 1. Translate UI
+      if (language !== 'en') {
+        const keys = Object.keys(translatedUI) as (keyof typeof translatedUI)[];
+        const values = Object.values(translatedUI);
+        const translatedValues = await Promise.all(values.map(text => translateText(text, language)));
+        const newTranslatedUI = keys.reduce((acc, key, idx) => {
+          acc[key] = translatedValues[idx];
+          return acc;
+        }, {} as typeof translatedUI);
+        setTranslatedUI(newTranslatedUI);
+      } else {
+        setTranslatedUI({
+          title: 'Symptom Checker',
+          subtitle: "Enter your symptoms and we'll help you understand what might be going on.",
+          describeSymptoms: 'Describe your symptoms',
+          analyze: 'Analyze',
+          analyzing: 'Analyzing...',
+          possibleConditions: 'Possible Conditions',
+          homeCareTips: 'Home Care Tips',
+          seekHelpTitle: 'When to Seek Help',
+        });
+      }
+
+      // 2. Translate result content
+      if (originalResult) {
+        if (language === 'en') {
+          setTranslatedResult(originalResult);
+        } else {
+          const [translatedConditions, translatedHomeCare, translatedSeekHelp] = await Promise.all([
+            Promise.all(originalResult.conditions.map(c => translateText(c, language))),
+            Promise.all(originalResult.homeCare.map(c => translateText(c, language))),
+            translateText(originalResult.seekHelp, language),
+          ]);
+
+          setTranslatedResult({
+            conditions: translatedConditions,
+            homeCare: translatedHomeCare,
+            seekHelp: translatedSeekHelp,
+          });
+        }
+      }
     };
 
-    if (language !== 'en') {
-      translateUI();
-    } else {
-      // reset to English
-      setTranslatedUI({
-        title: 'Symptom Checker',
-        subtitle: "Enter your symptoms and we'll help you understand what might be going on.",
-        describeSymptoms: 'Describe your symptoms',
-        analyze: 'Analyze',
-        analyzing: 'Analyzing...',
-        possibleConditions: 'Possible Conditions',
-        homeCareTips: 'Home Care Tips',
-        seekHelpTitle: 'When to Seek Help',
-      });
-    }
-  }, [language]);
+    translateAll();
+  }, [language, originalResult]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,9 +85,9 @@ const SymptomChecker: React.FC = () => {
     try {
       const response = await axios.post<SymptomResult>(
         'https://fusionhacks-project.onrender.com/analyze-symptoms',
-        { symptoms, language }
+        { symptoms, language: 'en' } // always request in English
       );
-      setResult(response.data);
+      setOriginalResult(response.data); // store original English
       setShowResult(true);
     } catch (error) {
       console.error('Error analyzing symptoms:', error);
@@ -76,6 +95,7 @@ const SymptomChecker: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
@@ -143,7 +163,7 @@ const SymptomChecker: React.FC = () => {
           </button>
         </form>
 
-        {result && showResult && (
+        {translatedResult && showResult && (
           <div className="mt-10 space-y-8 animate-fadeIn">
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-lg border border-blue-100">
               <h3 className="font-bold text-gray-800 mb-6 flex items-center text-2xl">
@@ -153,7 +173,7 @@ const SymptomChecker: React.FC = () => {
                 {translatedUI.possibleConditions}
               </h3>
               <div className="space-y-4">
-                {result.conditions.map((condition, index) => (
+                {translatedResult.conditions.map((condition, index) => (
                   <div key={index} className="flex items-center bg-white/60 rounded-xl p-4">
                     <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mr-4 flex-shrink-0"></div>
                     <span className="text-gray-800 text-lg font-medium">{condition}</span>
@@ -170,7 +190,7 @@ const SymptomChecker: React.FC = () => {
                 {translatedUI.homeCareTips}
               </h3>
               <div className="space-y-4">
-                {result.homeCare.map((tip, index) => (
+                {translatedResult.homeCare.map((tip, index) => (
                   <div key={index} className="flex items-start bg-white/60 rounded-xl p-4">
                     <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1 flex-shrink-0 shadow-lg">
                       {index + 1}
@@ -189,7 +209,7 @@ const SymptomChecker: React.FC = () => {
                 {translatedUI.seekHelpTitle}
               </h3>
               <div className="bg-white/60 rounded-xl p-6">
-                <p className="text-gray-800 leading-relaxed text-lg font-medium">{result.seekHelp}</p>
+                <p className="text-gray-800 leading-relaxed text-lg font-medium">{translatedResult.seekHelp}</p>
               </div>
             </div>
           </div>
