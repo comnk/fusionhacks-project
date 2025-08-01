@@ -16,7 +16,7 @@ client = OpenAI(api_key=OPENAI_KEY)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "https://lustrous-toffee-5b2441.netlify.app"],
+    allow_origins=["http://127.0.0.1:5173", "https://healthguardproject.netlify.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
