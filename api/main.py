@@ -1,5 +1,6 @@
 import json
 from fastapi import FastAPI
+from fastapi import Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
@@ -29,6 +30,14 @@ class SymptomRequest(BaseModel):
 class EmotionRequest(BaseModel):
     emotions: str
     language: str
+
+@app.options("/analyze-symptoms")
+async def options_analyze_symptoms():
+    return Response(status_code=200)
+
+@app.options("/analyze-emotions")
+async def options_analyze_emotions():
+    return Response(status_code=200)
 
 @app.post("/analyze-symptoms")
 async def analyze_symptoms(request: SymptomRequest):
