@@ -376,10 +376,9 @@ function App() {
               <p className="text-gray-600 text-left leading-relaxed text-lg">
                 Describe what's bothering you and get personalized insights on possible conditions, gentle home care tips, and clear guidance on when to seek professional help.
               </p>
-              <div className="flex items-center mt-4 text-sm text-black-500">
+              <div className="flex items-center mt-4 text-sm text-grey-500">
                 <div className="flex -space-x-2">
                 </div>
-                <span className="ml-3">Instant analysis • Evidence-based advice</span>
               </div>
             </div>
           </button>
@@ -405,7 +404,6 @@ function App() {
               <div className="flex items-center mt-4 text-sm text-black-500">
                 <div className="flex -space-x-2">
                 </div>
-                <span className="ml-3">AI-powered insights • Therapeutic techniques</span>
               </div>
             </div>
           </button>
@@ -429,19 +427,19 @@ function App() {
   <div className="space-y-4">
     <div className="flex items-start group">
       <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-      <p className="text-gray-700 text-lg">Complete privacy - no sign-up or personal data storage</p>
+      <p className="text-gray-700 text-lg">Private, anonymous, and always available</p>
     </div>
     <div className="flex items-start group">
       <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-      <p className="text-gray-700 text-lg">Always free with reliable, evidence-based health resources</p>
+      <p className="text-gray-700 text-lg">Supports both physical and mental health</p>
     </div>
     <div className="flex items-start group">
       <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-      <p className="text-gray-700 text-lg">Instant results on any device, anywhere, anytime</p>
+      <p className="text-gray-700 text-lg">Designed for real, everyday feelings</p>
     </div>
     <div className="flex items-start group">
       <div className="w-3 h-3 bg-gradient-to-r from-pink-400 to-red-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-      <p className="text-gray-700 text-lg">Dual health insights - physical and emotional wellness combined</p>
+      <p className="text-gray-700 text-lg">Links to trusted health resources (NIMH, SAMHSA, etc.)</p>
     </div>
   </div>
 </div>
