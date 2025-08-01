@@ -6,14 +6,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
-# Load the .env file
-load_dotenv()
-
-OPENAI_KEY = os.getenv("OPENAI_KEY")
-
 app = FastAPI()
-client = OpenAI(api_key=OPENAI_KEY)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5173", "https://healthguardproject.netlify.app/"],
@@ -21,6 +14,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Load the .env file
+load_dotenv()
+
+OPENAI_KEY = os.getenv("OPENAI_KEY")
+
+client = OpenAI(api_key=OPENAI_KEY)
 
 class SymptomRequest(BaseModel):
     symptoms: str
