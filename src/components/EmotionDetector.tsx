@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
 import { Heart, Lightbulb, TrendingUp, Smile } from 'lucide-react';
-import '../i18n';
+import { translateText } from '../translateText';
 
 interface EmotionResult {
   primaryEmotion: string;
@@ -18,19 +17,70 @@ const EmotionDetector: React.FC = () => {
   const [result, setResult] = useState<EmotionResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [language, setLanguage] = useState('en');
 
-  const { t, i18n } = useTranslation('emotion');
+  const [uiText, setUiText] = useState({
+    headerTitle: 'Emotion Detector',
+    headerSubtitle: 'Enter how you feel, and we’ll analyze your emotional state.',
+    textareaLabel: 'Describe how you’re feeling',
+    textareaPlaceholder: 'e.g. I feel anxious and overwhelmed...',
+    submitButton: 'Analyze Emotion',
+    loadingMessage: 'Analyzing...',
+    supportMessage: 'We care about your mental health ❤️',
+    copingTipsTitle: 'Coping Tips',
+    reminderTitle: 'Remember',
+    reminderText: 'It’s okay to feel what you’re feeling. Emotions are natural.',
+    reminderSuggestion: 'Take a deep breath and be kind to yourself.',
+    confidence: 'Confidence: {{confidence}}%',
+  });
+
+  // Translate static UI text when language changes
+  useEffect(() => {
+    const translateUI = async () => {
+      const keys = Object.keys(uiText) as (keyof typeof uiText)[];
+      const values = Object.values(uiText);
+      const translatedValues = await Promise.all(
+        values.map((text) => translateText(text, language))
+      );
+      const translatedUI = keys.reduce((acc, key, idx) => {
+        acc[key] = translatedValues[idx];
+        return acc;
+      }, {} as typeof uiText);
+      setUiText(translatedUI);
+    };
+
+    if (language !== 'en') translateUI();
+    else {
+      setUiText({
+        headerTitle: 'Emotion Detector',
+        headerSubtitle: 'Enter how you feel, and we’ll analyze your emotional state.',
+        textareaLabel: 'Describe how you’re feeling',
+        textareaPlaceholder: 'e.g. I feel anxious and overwhelmed...',
+        submitButton: 'Analyze Emotion',
+        loadingMessage: 'Analyzing...',
+        supportMessage: 'We care about your mental health ❤️',
+        copingTipsTitle: 'Coping Tips',
+        reminderTitle: 'Remember',
+        reminderText: 'It’s okay to feel what you’re feeling. Emotions are natural.',
+        reminderSuggestion: 'Take a deep breath and be kind to yourself.',
+        confidence: 'Confidence: {{confidence}}%',
+      });
+    }
+  }, [language]);
 
   const analyzeEmotion = async (emotions: string): Promise<EmotionResult> => {
     try {
-      const response = await axios.post<EmotionResult>('https://fusionhacks-project.onrender.com/analyze-emotions', {
-        emotions,
-        language: i18n.language,
-      });
+      const response = await axios.post<EmotionResult>(
+        'https://fusionhacks-project.onrender.com/analyze-emotions',
+        {
+          emotions,
+          language,
+        }
+      );
       return response.data;
     } catch (error: any) {
-      console.error("Emotion API error:", error?.response?.data || error.message);
-      throw new Error("Unable to analyze emotion.");
+      console.error('Emotion API error:', error?.response?.data || error.message);
+      throw new Error('Unable to analyze emotion.');
     }
   };
 
@@ -40,12 +90,12 @@ const EmotionDetector: React.FC = () => {
 
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((res) => setTimeout(res, 1000));
       const analysis = await analyzeEmotion(emotionText);
       setResult(analysis);
       setShowResult(true);
     } catch (error) {
-      console.error('Error analyzing emotion:', error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -58,7 +108,7 @@ const EmotionDetector: React.FC = () => {
       purple: 'from-purple-500 to-pink-500',
       green: 'from-green-500 to-emerald-500',
       red: 'from-red-500 to-pink-500',
-      gray: 'from-gray-500 to-slate-500'
+      gray: 'from-gray-500 to-slate-500',
     };
     return colors[color as keyof typeof colors] || colors.gray;
   };
@@ -73,35 +123,42 @@ const EmotionDetector: React.FC = () => {
               <Heart className="w-8 h-8" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold">{t('headerTitle')}</h2>
+              <h2 className="text-3xl font-bold">{uiText.headerTitle}</h2>
               <p className="text-pink-100 text-sm mt-1">Mental Wellness Assistant</p>
             </div>
           </div>
-          <p className="text-pink-100 text-lg leading-relaxed">{t('headerSubtitle')}</p>
+          <p className="text-pink-100 text-lg leading-relaxed">{uiText.headerSubtitle}</p>
+          <select
+            onChange={(e) => setLanguage(e.target.value)}
+            value={language}
+            className="absolute top-4 right-4 bg-white/20 text-white font-semibold px-3 py-1 rounded-xl shadow"
+          >
+            <option value="en">🇺🇸 English</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="hi">🇮🇳 Hindi</option>
+            <option value="zh">🇨🇳 Chinese</option>
+          </select>
         </div>
       </div>
 
       <div className="p-8 relative">
-        <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-4 left-4 w-24 h-24 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-full opacity-30 animate-bounce" style={{ animationDelay: '1s' }}></div>
-
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label htmlFor="emotions" className="block text-gray-800 font-semibold mb-4 text-xl">
-              {t('textareaLabel')}
+              {uiText.textareaLabel}
             </label>
             <textarea
               id="emotions"
               value={emotionText}
               onChange={(e) => setEmotionText(e.target.value)}
-              placeholder={`💭 ${t('textareaPlaceholder')}`}
+              placeholder={`💭 ${uiText.textareaPlaceholder}`}
               className="w-full p-6 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-pink-200 focus:border-pink-400 resize-none text-lg leading-relaxed shadow-inner bg-gray-50/50 transition-all duration-300"
               rows={5}
               required
             />
             <div className="mt-2 text-sm text-gray-500 flex items-center">
               <span className="mr-2">💝</span>
-              <span>{t('supportMessage')}</span>
+              <span>{uiText.supportMessage}</span>
             </div>
           </div>
 
@@ -115,12 +172,12 @@ const EmotionDetector: React.FC = () => {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                  <span>{t("loadingMessage")}</span>
+                  <span>{uiText.loadingMessage}</span>
                 </>
               ) : (
                 <>
                   <Heart className="w-6 h-6 mr-3" />
-                  <span>{t('submitButton')}</span>
+                  <span>{uiText.submitButton}</span>
                 </>
               )}
             </div>
@@ -139,7 +196,9 @@ const EmotionDetector: React.FC = () => {
                   </h3>
                   <div className="text-right">
                     <div className="bg-white/20 rounded-full px-4 py-2">
-                      <div className="text-sm font-medium">{t('confidence', { confidence: result.confidence })}</div>
+                      <div className="text-sm font-medium">
+                        {uiText.confidence.replace('{{confidence}}', result.confidence.toFixed(1))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -154,7 +213,7 @@ const EmotionDetector: React.FC = () => {
                 <div className="p-2 bg-green-100 rounded-xl mr-4">
                   <Lightbulb className="w-6 h-6 text-green-600" />
                 </div>
-                {t('copingTipsTitle')}
+                {uiText.copingTipsTitle}
               </h3>
               <div className="space-y-4">
                 {result.copingTips.map((tip, index) => (
@@ -173,22 +232,22 @@ const EmotionDetector: React.FC = () => {
                 <div className="p-2 bg-blue-100 rounded-xl mr-4">
                   <TrendingUp className="w-6 h-6 text-blue-600" />
                 </div>
-                {t('reminderTitle')}
+                {uiText.reminderTitle}
               </h3>
               <div className="bg-white/60 rounded-xl p-6">
                 <p className="text-gray-800 leading-relaxed mb-4 text-lg font-medium">
-                  {t('reminderText')}
+                  {uiText.reminderText}
                 </p>
                 <div className="flex items-center text-blue-600">
                   <Smile className="w-5 h-5 mr-3" />
-                  <span className="text-lg font-medium">{t('reminderSuggestion')}</span>
+                  <span className="text-lg font-medium">{uiText.reminderSuggestion}</span>
                 </div>
               </div>
             </div>
 
             <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-3xl p-8 shadow-lg border border-gray-100">
               <p className="text-lg text-gray-700 text-center leading-relaxed font-medium">
-                {t('supportMessage')}
+                {uiText.supportMessage}
               </p>
             </div>
           </div>
