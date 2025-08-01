@@ -52,7 +52,7 @@ async def analyze_symptoms(request: SymptomRequest):
                 If the user’s input language is English, reply in English.
                 """
             },
-            {"role": "user", "content": f"Given these symptoms, return the JSON: {request.symptoms}"}
+            {"role": "user", "content": f"Given these symptoms, return the JSON: {request.symptoms}. User's speaking language code is: {request.language}"}
         ]
     )
 
@@ -82,7 +82,7 @@ async def analyze_emotions(request: EmotionRequest):
         color: represents user emotions, like green is for happy, blue is for sad, stress is orange, purple is anxiety, etc.
         icon: emoji representing what the user is feeling
 Only return the JSON object, no extra text."""},
-            {"role": "user", "content": f"Given what the user listed, return the JSON: {request.emotions}"}
+            {"role": "user", "content": f"Given what the user listed, return the JSON: {request.emotions}. Language code is: User's speaking language code is: {request.language}"}
         ]
     )
 
