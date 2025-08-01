@@ -21,15 +21,15 @@ const EmotionDetector: React.FC = () => {
 
   const [uiText, setUiText] = useState({
     headerTitle: 'Emotion Detector',
-    headerSubtitle: 'Enter how you feel, and we’ll analyze your emotional state.',
-    textareaLabel: 'Describe how you’re feeling',
+    headerSubtitle: 'Enter how you feel, and we\'ll analyze your emotional state.',
+    textareaLabel: 'Describe how you\'re feeling',
     textareaPlaceholder: 'e.g. I feel anxious and overwhelmed...',
     submitButton: 'Analyze Emotion',
     loadingMessage: 'Analyzing...',
     supportMessage: 'We care about your mental health ❤️',
     copingTipsTitle: 'Coping Tips',
     reminderTitle: 'Remember',
-    reminderText: 'It’s okay to feel what you’re feeling. Emotions are natural.',
+    reminderText: 'It\'s okay to feel what you\'re feeling. Emotions are natural.',
     reminderSuggestion: 'Take a deep breath and be kind to yourself.',
     confidence: 'Confidence: {{confidence}}%',
   });
@@ -53,15 +53,15 @@ const EmotionDetector: React.FC = () => {
     else {
       setUiText({
         headerTitle: 'Emotion Detector',
-        headerSubtitle: 'Enter how you feel, and we’ll analyze your emotional state.',
-        textareaLabel: 'Describe how you’re feeling',
+        headerSubtitle: 'Enter how you feel, and we\'ll analyze your emotional state.',
+        textareaLabel: 'Describe how you\'re feeling',
         textareaPlaceholder: 'e.g. I feel anxious and overwhelmed...',
         submitButton: 'Analyze Emotion',
         loadingMessage: 'Analyzing...',
         supportMessage: 'We care about your mental health ❤️',
         copingTipsTitle: 'Coping Tips',
         reminderTitle: 'Remember',
-        reminderText: 'It’s okay to feel what you’re feeling. Emotions are natural.',
+        reminderText: 'It\'s okay to feel what you\'re feeling. Emotions are natural.',
         reminderSuggestion: 'Take a deep breath and be kind to yourself.',
         confidence: 'Confidence: {{confidence}}%',
       });
@@ -117,7 +117,19 @@ const EmotionDetector: React.FC = () => {
     <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
       <div className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 p-8 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-        <div className="relative z-10">
+        <div className="absolute top-4 right-4 z-30">
+          <select
+            onChange={(e) => setLanguage(e.target.value)}
+            value={language}
+            className="bg-white/95 backdrop-blur-sm text-gray-800 font-semibold px-4 py-2 rounded-xl shadow-lg border border-white/30 hover:bg-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
+          >
+            <option value="en">🇺🇸 English</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="hi">🇮🇳 Hindi</option>
+            <option value="zh">🇨🇳 Chinese</option>
+          </select>
+        </div>
+        <div className="relative z-10 pt-12">
           <div className="flex items-center mb-3">
             <div className="p-2 bg-white/20 rounded-xl mr-4">
               <Heart className="w-8 h-8" />
@@ -128,16 +140,6 @@ const EmotionDetector: React.FC = () => {
             </div>
           </div>
           <p className="text-pink-100 text-lg leading-relaxed">{uiText.headerSubtitle}</p>
-          <select
-            onChange={(e) => setLanguage(e.target.value)}
-            value={language}
-            className="absolute top-4 right-4 bg-white/20 text-white font-semibold px-3 py-1 rounded-xl shadow"
-          >
-            <option value="en">🇺🇸 English</option>
-            <option value="es">🇪🇸 Spanish</option>
-            <option value="hi">🇮🇳 Hindi</option>
-            <option value="zh">🇨🇳 Chinese</option>
-          </select>
         </div>
       </div>
 

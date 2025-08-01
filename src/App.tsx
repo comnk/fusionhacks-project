@@ -166,10 +166,10 @@ function App() {
       </div>
       
 
-<div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4 hidden lg:block">
+<div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-20 space-y-4 hidden lg:block pr-4">
   <div className="text-center mb-6">
     <h3 className="text-white font-bold text-sm bg-pink-600/80 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
-      Mental
+      Mental Health 
     </h3>
   </div>
   
@@ -376,9 +376,14 @@ function App() {
               <p className="text-gray-600 text-left leading-relaxed text-lg">
                 Describe what's bothering you and get personalized insights on possible conditions, gentle home care tips, and clear guidance on when to seek professional help.
               </p>
-              <div className="flex items-center mt-4 text-sm text-grey-500">
-                <div className="flex -space-x-2">
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex items-center text-sm text-grey-500">
+                  <div className="flex -space-x-2">
+                  </div>
                 </div>
+                <button className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+                  <span>Click Here</span>
+                </button>
               </div>
             </div>
           </button>
@@ -401,9 +406,14 @@ function App() {
               <p className="text-gray-600 text-left leading-relaxed text-lg">
                 Share what's in your heart and receive compassionate emotional insights with personalized coping strategies to support your mental well-being.
               </p>
-              <div className="flex items-center mt-4 text-sm text-black-500">
-                <div className="flex -space-x-2">
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex items-center text-sm text-black-500">
+                  <div className="flex -space-x-2">
+                  </div>
                 </div>
+                <button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+                  <span>Click Here</span>
+                </button>
               </div>
             </div>
           </button>
