@@ -23,7 +23,7 @@ const EmotionDetector: React.FC = () => {
 
   const analyzeEmotion = async (emotions: string): Promise<EmotionResult> => {
     try {
-      const response = await axios.post<EmotionResult>('http://localhost:8000/analyze-emotions', {
+      const response = await axios.post<EmotionResult>('https://fusionhacks-project.onrender.com/analyze-emotions', {
         emotions,
         language: i18n.language,
       });

@@ -20,7 +20,7 @@ const SymptomChecker: React.FC = () => {
   const { t, i18n } = useTranslation('symptoms');
 
   const analyzeSymptoms = async (symptoms: string): Promise<SymptomResult> => {
-    const response = await axios.post<SymptomResult>('http://localhost:8000/analyze-symptoms', {
+    const response = await axios.post<SymptomResult>('https://fusionhacks-project.onrender.com/analyze-symptoms', {
       symptoms: symptoms,
       language: i18n.language
     });
