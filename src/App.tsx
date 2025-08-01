@@ -18,9 +18,9 @@ function App() {
     >
       {/* Government & Mental Health Resources - Left Side */}
       <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4 hidden lg:block">
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 pr-4">
           <h3 className="text-white font-bold text-sm bg-blue-600/80 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
-            🏛️ Official Resources
+           Official Resources
           </h3>
         </div>
         
@@ -39,6 +39,82 @@ function App() {
             CDC Health Info
           </div>
         </a>
+                
+        {/* ecdc */}
+        <a 
+          href="https://www.ecdc.europa.eu/en" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-pink-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="ECDC - European Centre for Disease Prevention and Control "
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🧑‍⚕️
+          </div>
+          <div className="absolute left-20 top-1/2 transform -translate-y-1/2 bg-blue-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+           ECDC - European Centre for Disease Prevention and Control
+          </div>
+        </a>
+        
+        <a 
+          href="https://www.paho.org/en" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-orange-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="PAHO - pan american health organization  "
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            ❤️‍🩹
+          </div>
+          <div className="absolute left-20 top-1/2 transform -translate-y-1/2 bg-blue-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          PAHO - pan american health organization 
+          </div>
+        </a>
+
+        <a 
+          href="https://www.healthdata.org/research-analysis/gbd-publications" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-blue-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="GBD - Global Burden of Disease"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            😃
+          </div>
+          <div className="absolute left-20 top-1/2 transform -translate-y-1/2 bg-blue-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          GBD - Global Burden of Disease
+          </div>
+
+        </a>
+                <a 
+          href="https://www.nationalacademies.org/hmd/health-and-medicine-division" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-red-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="National Academies of Sciences, Engineering, and Medicine – Health and Medicine Division"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🫵
+          </div>
+          <div className="absolute left-20 top-1/2 transform -translate-y-1/2 bg-blue-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          National Academies of Sciences, Engineering, and Medicine 
+          </div>
+        </a>
+       <a 
+          href="https://www.apha.org/membership?gad_source=1&gad_campaignid=21009428146&gbraid=0AAAAADuQWwue12k5WvIAbzDf4Vc95jnRq&gclid=CjwKCAjwy7HEBhBJEiwA5hQNoomupmusjw34Z5sjD3BT-lm7yQgkoiLpU2itBFlKnRx6YwSUTKC8thoCSxQQAvD_BwE" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-yellow-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="APHA - American Public Health Association"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🙏
+          </div>
+          <div className="absolute left-20 top-1/2 transform -translate-y-1/2 bg-blue-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          APHA - American Public Health Association
+          </div>
+        </a>
+        
 
         {/* NIH */}
         <a 
@@ -88,21 +164,22 @@ function App() {
           </div>
         </a>
       </div>
+      
 
-      {/* Mental Health Resources - Right Side */}
-      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4 hidden lg:block">
-        <div className="text-center mb-6">
-          <h3 className="text-white font-bold text-sm bg-pink-600/80 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
-            🧠 Mental Health
-          </h3>
-        </div>
-        
+<div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-20 space-y-4 hidden lg:block">
+  <div className="text-center mb-6">
+    <h3 className="text-white font-bold text-sm bg-pink-600/80 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
+      Mental
+    </h3>
+  </div>
+  
+
         {/* NIMH */}
         <a 
           href="https://www.nimh.nih.gov/health" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="block w-16 h-16 bg-pink-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          className="block w-16 h-16 bg-blue-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
           title="NIMH - National Institute of Mental Health"
         >
           <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
@@ -113,28 +190,29 @@ function App() {
           </div>
         </a>
 
+
         {/* SAMHSA */}
         <a 
-          href="https://findtreatment.gov/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="block w-16 h-16 bg-teal-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
-          title="SAMHSA - Substance Abuse and Mental Health Services"
-        >
-          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
-            🤝
-          </div>
-          <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-teal-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
-            SAMHSA Help
-          </div>
-        </a>
+  href="https://findtreatment.gov/" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="block w-16 h-16 bg-teal-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+  title="SAMHSA - Substance Abuse and Mental Health Services"
+>
+  <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+    🤝
+  </div>
+  <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-teal-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+    SAMHSA Help
+  </div>
+</a>
 
         {/* Mental Health America */}
         <a 
           href="https://www.mhanational.org/mental-health-screening-tools" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="block w-16 h-16 bg-emerald-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          className="block w-16 h-16 bg-orange-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
           title="Mental Health America"
         >
           <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
@@ -142,6 +220,68 @@ function App() {
           </div>
           <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-emerald-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
             Mental Health America
+          </div>
+        </a>
+
+        {/* Mental Health Europe */}
+        <a 
+          href="https://www.mentalhealtheurope.org/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-yellow-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="Mental Health Europe"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🫂
+          </div>
+          <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-emerald-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          Mental Health Europe
+          </div>
+        </a>
+{/* Beyond Blue (Australia) */}
+        <a 
+          href="https://www.beyondblue.org.au/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-purple-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="Beyond Blue (Australia)"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🛖
+          </div>
+          <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-emerald-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          Beyond Blue (Australia)
+          </div>
+        </a>
+
+        {/* Mind (UK)*/}
+        <a 
+          href="https://www.mind.org.uk/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-blue-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="Mind (UK)"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+            🤞
+          </div>
+          <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-emerald-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          Mind (UK)
+          </div>
+        </a>
+                {/* HeadsUpGuys (Canada)*/}
+        <a 
+          href="https://www.mind.org.uk/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block w-16 h-16 bg-blue-600/90 backdrop-blur-sm rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 group relative"
+          title="HeadsUpGuys (Canada)"
+        >
+          <div className="flex items-center justify-center w-full h-full text-white text-2xl font-bold">
+          🩶
+          </div>
+          <div className="absolute right-20 top-1/2 transform -translate-y-1/2 bg-emerald-600/95 backdrop-blur-sm text-white px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-sm font-medium shadow-lg">
+          HeadsUpGuys (Canada)
           </div>
         </a>
 
@@ -160,6 +300,7 @@ function App() {
             Crisis Text Line
           </div>
         </a>
+        
 
         {/* 988 Suicide & Crisis Lifeline */}
         <a 
@@ -178,6 +319,8 @@ function App() {
         </a>
       </div>
       <div className="max-w-md mx-auto">
+
+        
 
 {/* Header */}
 <div className="text-center mb-12 relative">
