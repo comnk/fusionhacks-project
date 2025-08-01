@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY; // use env var for security
+const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
 export async function translateText(text: string, targetLang: string) {
     try {
