@@ -80,6 +80,7 @@ const EmotionDetector: React.FC = () => {
         'https://fusionhacks-project.onrender.com/analyze-emotions',
         { emotions: emotionText, language: 'en' } // force English
       );
+      console.log(response.data);
       setRawResult(response.data); // will trigger useEffect to translate
       setShowResult(true);
     } catch (error) {

@@ -83,7 +83,7 @@ async def analyze_emotions(request: EmotionRequest):
         model="gpt-4o-mini",
         
         messages=[
-            {"role": "system", "content": """You are a helpful therapist. Based on the user's language preference (English or Spanish), respond in that language. Return output as a valid JSON object with:
+            {"role": "system", "content": """You are a helpful therapist. Based on the user's language preference (English or Spanish), respond in that language. You MUST Return output as a valid JSON object with:
 - "primaryEmotion": primary emotion user most likely is feeling
 - "confidence": how confident are you in your assessment of what the user is feeling (as a whole number from 0 to 100)
 - "insights": give insights on how user is feeling and support them if needed
