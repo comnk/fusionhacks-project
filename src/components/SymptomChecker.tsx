@@ -42,7 +42,7 @@ const SymptomChecker: React.FC = () => {
       }, {} as typeof translatedUI);
       setTranslatedUI(newTranslatedUI);
 
-      // Translate result (if any)
+      // Translate translatedResult (if any)
       if (rawResult && language !== 'en') {
         const [translatedConditions, translatedHomeCare, translatedSeekHelp] = await Promise.all([
           Promise.all(rawResult.conditions.map(text => translateText(text, language))),

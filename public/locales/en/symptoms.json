@@ -9,7 +9,7 @@
         "button": "Help me understand",
         "loading": "Looking into this for you..."
     },
-    "results": {
+    "translatedResults": {
         "conditionsTitle": "This might be what's going on",
         "homeCareTitle": "Ways to take care of yourself at home",
         "seekHelpTitle": "When it's time to see a doctor",

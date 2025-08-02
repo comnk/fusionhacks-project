@@ -14,7 +14,8 @@ interface EmotionResult {
 
 const EmotionDetector: React.FC = () => {
   const [emotionText, setEmotionText] = useState('');
-  const [result, setResult] = useState<EmotionResult | null>(null);
+  const [rawResult, setRawResult] = useState<EmotionResult | null>(null); // always English
+  const [translatedResult, setTranslatedResult] = useState<EmotionResult | null>(null); // depends on language
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [language, setLanguage] = useState('en');
@@ -36,53 +37,37 @@ const EmotionDetector: React.FC = () => {
 
   // Translate static UI text when language changes
   useEffect(() => {
-    const translateUI = async () => {
+    const translateAll = async () => {
+      // UI text
       const keys = Object.keys(uiText) as (keyof typeof uiText)[];
       const values = Object.values(uiText);
-      const translatedValues = await Promise.all(
-        values.map((text) => translateText(text, language))
-      );
-      const translatedUI = keys.reduce((acc, key, idx) => {
+      const translatedValues = await Promise.all(values.map(text => translateText(text, language)));
+      const newUI = keys.reduce((acc, key, idx) => {
         acc[key] = translatedValues[idx];
         return acc;
       }, {} as typeof uiText);
-      setUiText(translatedUI);
+      setUiText(newUI);
+
+      // Result translation
+      if (rawResult && language !== 'en') {
+        const [translatedEmotion, translatedInsights, translatedCopingTips] = await Promise.all([
+          translateText(rawResult.primaryEmotion, language),
+          translateText(rawResult.insights, language),
+          Promise.all(rawResult.copingTips.map(tip => translateText(tip, language))),
+        ]);
+        setTranslatedResult({
+          ...rawResult,
+          primaryEmotion: translatedEmotion,
+          insights: translatedInsights,
+          copingTips: translatedCopingTips,
+        });
+      } else {
+        setTranslatedResult(rawResult); // fallback to English
+      }
     };
 
-    if (language !== 'en') translateUI();
-    else {
-      setUiText({
-        headerTitle: 'Emotion Detector',
-        headerSubtitle: 'Enter how you feel, and we\'ll analyze your emotional state.',
-        textareaLabel: 'Describe how you\'re feeling',
-        textareaPlaceholder: 'e.g. I feel anxious and overwhelmed...',
-        submitButton: 'Analyze Emotion',
-        loadingMessage: 'Analyzing...',
-        supportMessage: 'We care about your mental health ❤️',
-        copingTipsTitle: 'Coping Tips',
-        reminderTitle: 'Remember',
-        reminderText: 'It\'s okay to feel what you\'re feeling. Emotions are natural.',
-        reminderSuggestion: 'Take a deep breath and be kind to yourself.',
-        confidence: 'Confidence: {{confidence}}%',
-      });
-    }
-  }, [language]);
-
-  const analyzeEmotion = async (emotions: string): Promise<EmotionResult> => {
-    try {
-      const response = await axios.post<EmotionResult>(
-        'https://fusionhacks-project.onrender.com/analyze-emotions',
-        {
-          emotions,
-          language,
-        }
-      );
-      return response.data;
-    } catch (error: any) {
-      console.error('Emotion API error:', error?.response?.data || error.message);
-      throw new Error('Unable to analyze emotion.');
-    }
-  };
+    translateAll();
+  }, [language, rawResult]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,8 +76,11 @@ const EmotionDetector: React.FC = () => {
     setLoading(true);
     try {
       await new Promise((res) => setTimeout(res, 1000));
-      const analysis = await analyzeEmotion(emotionText);
-      setResult(analysis);
+      const response = await axios.post<EmotionResult>(
+        'https://fusionhacks-project.onrender.com/analyze-emotions',
+        { emotions: emotionText, language: 'en' } // force English
+      );
+      setRawResult(response.data); // will trigger useEffect to translate
       setShowResult(true);
     } catch (error) {
       console.error(error);
@@ -186,26 +174,26 @@ const EmotionDetector: React.FC = () => {
           </button>
         </form>
 
-        {result && showResult && (
+        {translatedResult && showResult && (
           <div className="mt-10 space-y-8 animate-fadeIn">
-            <div className={`bg-gradient-to-r ${getColorClasses(result.color)} rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden`}>
+            <div className={`bg-gradient-to-r ${getColorClasses(translatedResult.color)} rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden`}>
               <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-4xl font-bold flex items-center">
-                    <span className="text-5xl mr-5 animate-pulse">{result.icon}</span>
-                    {result.primaryEmotion}
+                    <span className="text-5xl mr-5 animate-pulse">{translatedResult.icon}</span>
+                    {translatedResult.primaryEmotion}
                   </h3>
                   <div className="text-right">
                     <div className="bg-white/20 rounded-full px-4 py-2">
                       <div className="text-sm font-medium">
-                        {uiText.confidence.replace('{{confidence}}', result.confidence.toFixed(1))}
+                        {uiText.confidence.replace('{{confidence}}', translatedResult.confidence.toFixed(1))}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mt-6">
-                  <p className="text-white leading-relaxed text-xl font-medium">{result.insights}</p>
+                  <p className="text-white leading-relaxed text-xl font-medium">{translatedResult.insights}</p>
                 </div>
               </div>
             </div>
@@ -218,7 +206,7 @@ const EmotionDetector: React.FC = () => {
                 {uiText.copingTipsTitle}
               </h3>
               <div className="space-y-4">
-                {result.copingTips.map((tip, index) => (
+                {translatedResult.copingTips.map((tip, index) => (
                   <div key={index} className="flex items-start bg-white/60 rounded-xl p-4 hover:bg-white/80 transition-colors">
                     <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1 flex-shrink-0 shadow-lg">
                       {index + 1}
