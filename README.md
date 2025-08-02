@@ -58,8 +58,6 @@ It’s not about diagnosis. It’s about clarity, reflection, and care, especial
 
 ---
 
-## Getting Started
-
 ### Clone the repository
 
 ```bash
