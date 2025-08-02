@@ -1,57 +1,67 @@
-HealthGuard AI
-Take a breath.
-Not feeling like yourself lately?
-You don’t need to have all the answers.
-Sometimes, just saying “I feel off” is enough.
+# HealthGuard AI
 
-HealthGuard AI is a smart health assistant that looks out for both your body and your mind.
+**Take a breath.**  
+Not feeling like yourself lately?  
+You don’t need to have all the answers.  
+Sometimes, just saying _“I feel off”_ is enough.
+
+**HealthGuard AI** is a smart health assistant that looks out for both your **body and your mind**.  
 Whether you’re experiencing symptoms or just need space to process your emotions, HealthGuard helps you slow down, reflect, and take informed steps toward feeling better, no pressure, just support.
 
-🩺 What It Offers
-Physical Health Support
-Symptom Checker
-Just type what you’re feeling physically. HealthGuard responds with:
+---
 
-Possible conditions associated with your symptoms
+## What It Offers
 
-Gentle at-home care suggestions
+### Physical Health Support
 
-Guidance on when it’s time to seek medical attention
+**Symptom Checker**  
+Describe what you’re experiencing, and get:
+- Possible conditions based on your symptoms  
+- Gentle at-home care suggestions  
+- Clear guidance on when to seek medical attention
 
-Emotional Insight
-Mental & Emotional Well-Being
-Share what’s on your mind. You’ll receive:
+### Mental and Emotional Insight
 
-Emotion classification using natural language processing
+**Emotional Well-Being Analysis**  
+Type how you’re feeling, and receive:
+- Emotion detection using natural language processing  
+- Personalized coping strategies based on your emotional tone  
+- Calm, supportive language that helps you process, not just label
 
-Tailored coping strategies based on your emotional state
+---
 
-A human, compassionate tone — not clinical or robotic
+## Built With
 
-⚙️ Built With
-FastAPI – Backend framework for handling health and emotion-related requests
+- **FastAPI** – Backend API framework  
+- **React + TypeScript** – Frontend development  
+- **Tailwind CSS** – Styling and layout  
+- **Figma** – Design and prototyping  
+- **Jitter** and **Rotato** – UI animations and presentation visuals
 
-React + TypeScript – Frontend for dynamic, typed UI development
+---
 
-Tailwind CSS – For responsive, modern, utility-first styling
+## Why It Matters
 
-Custom NLP Model – Emotion detection from user input using a hosted Hugging Face Gradio Space
+You don’t have to feel sick to need support.  
+HealthGuard bridges the often-overlooked space between physical health and emotional awareness — helping users check in with themselves more holistically.
 
-Figma – For prototyping and UI/UX design
+It’s not about diagnosis. It’s about clarity, reflection, and care, especially in moments of uncertainty.
 
-Jitter + Rotato – For UI animations and presentation visuals
+---
 
-💡 Why It Matters
-You don’t have to feel sick to need support.
-HealthGuard bridges the often-overlooked space between physical health and emotional awareness, helping users check in with themselves holistically.
+## Future Plans
 
-It’s not about diagnosis. It’s about clarity, self-awareness, and care — especially in moments of uncertainty.
+- Daily emotional check-in prompts  
+- Voice journaling and audio input  
+- Personalized dashboard for emotional trends  
+- Integration with trusted health resources (CDC, NIH, 988, etc.)
 
-📌 Future Plans
-Daily emotional check-in prompts
+---
 
-Voice journaling and audio input
+## Getting Started
 
-Personalized user dashboard with emotional trend tracking
+### Clone the repository
 
-Integration with trusted health resources (CDC, NIH, Mental Health America, 988)
+```bash
+git clone https://github.com/your-username/healthguard-ai.git
+cd healthguard-ai
